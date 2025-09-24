@@ -1,7 +1,8 @@
 package org.jabref.logic.layout.format;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,25 +15,37 @@ class ReplaceUnicodeLigaturesFormatterTest {
         formatter = new ReplaceUnicodeLigaturesFormatter();
     }
 
-    @Test
-    void plainFormat() {
-        assertEquals("lorem ipsum", formatter.format("lorem ipsum"));
+    @ParameterizedTest
+    @CsvSource({
+            "lorem ipsum,lorem ipsum"
+    })
+    void plainFormat(String expected, String input) {
+        assertEquals(expected, formatter.format(input));
     }
 
-    @Test
-    void singleLigatures() {
-        assertEquals("AA", formatter.format("\uA732"));
-        assertEquals("fi", formatter.format("ﬁ"));
-        assertEquals("et", formatter.format("\uD83D\uDE70"));
+    @ParameterizedTest
+    @CsvSource({
+            "AA,\uA732",
+            "fi,ﬁ",
+            "et,\uD83D\uDE70"
+    })
+    void singleLigatures(String expected, String input) {
+        assertEquals(expected, formatter.format(input));
     }
 
-    @Test
-    void ligatureSequence() {
-        assertEquals("aefffflstue", formatter.format("æﬀﬄﬆᵫ"));
+    @ParameterizedTest
+    @CsvSource({
+            "aefffflstue,æﬀﬄﬆᵫ"
+    })
+    void ligatureSequence(String expected, String input) {
+        assertEquals(expected, formatter.format(input));
     }
 
-    @Test
-    void sampleInput() {
-        assertEquals("AEneas", formatter.format("Æneas"));
+    @ParameterizedTest
+    @CsvSource({
+            "AEneas,Æneas"
+    })
+    void sampleInput(String expected, String input) {
+        assertEquals(expected, formatter.format(input));
     }
 }
