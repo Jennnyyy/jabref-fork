@@ -13,7 +13,7 @@ class AuthorFirstAbbrLastOxfordCommasTest {
      * Test method for {@link org.jabref.logic.layout.format.AuthorFirstAbbrLastOxfordCommas#format(java.lang.String)}.
      */
     @ParameterizedTest
-    @CsvSource(delimiter=';', value={
+    @CsvSource(delimiter = ';', value = {
             "'';''",
             "V. S. Someone;Someone, Van Something",
             "J. von Neumann and P. Black Brown;John von Neumann and Black Brown, Peter",

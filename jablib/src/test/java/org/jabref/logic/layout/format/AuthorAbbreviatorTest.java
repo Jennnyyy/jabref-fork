@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class AuthorAbbreviatorTest {
     @ParameterizedTest
-    @ValueSource(strings = {"", "Someone, Van Something", "Smith, John", "von Neumann, John and Smith, John and Black Brown, Peter"})
+    @ValueSource(strings = { "", "Someone, Van Something", "Smith, John", "von Neumann, John and Smith, John and Black Brown, Peter"})
     void format(String input) {
         LayoutFormatter a = new AuthorLastFirstAbbreviator();
         LayoutFormatter b = new AuthorAbbreviator();

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AuthorLastFirstTest {
 
     @ParameterizedTest
-    @CsvSource(delimiter =';', value = {
+    @CsvSource(delimiter = ';', value = {
             "'';''",
             "Someone, Van Something;Van Something Someone",
             "von Neumann, John and Black Brown, Peter;John von Neumann and Black Brown, Peter",
