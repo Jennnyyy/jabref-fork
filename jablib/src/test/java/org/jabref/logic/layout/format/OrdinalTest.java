@@ -1,6 +1,8 @@
 package org.jabref.logic.layout.format;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -17,37 +19,54 @@ class OrdinalTest {
         assertNull(new Ordinal().format(null));
     }
 
-    @Test
-    void singleDigit() {
-        assertEquals("1st", new Ordinal().format("1"));
-        assertEquals("2nd", new Ordinal().format("2"));
-        assertEquals("3rd", new Ordinal().format("3"));
-        assertEquals("4th", new Ordinal().format("4"));
+    @ParameterizedTest
+    @CsvSource({
+            "1st,1",
+            "2nd,2",
+            "3rd,3",
+            "4th,4"
+    })
+    void singleDigit(String expected, String input) {
+        assertEquals(expected, new Ordinal().format(input));
     }
 
-    @Test
-    void multiDigits() {
-        assertEquals("11th", new Ordinal().format("11"));
-        assertEquals("111th", new Ordinal().format("111"));
-        assertEquals("21st", new Ordinal().format("21"));
+    @ParameterizedTest
+    @CsvSource({
+            "11th,11",
+            "111th,111",
+            "21st,21"
+    })
+    void multiDigits(String expected, String input) {
+        assertEquals(expected, new Ordinal().format(input));
     }
 
-    @Test
-    void alreadyOrdinals() {
-        assertEquals("1st", new Ordinal().format("1st"));
-        assertEquals("111th", new Ordinal().format("111th"));
-        assertEquals("22nd", new Ordinal().format("22nd"));
+    @ParameterizedTest
+    @CsvSource({
+            "1st,1st",
+            "111th,111th",
+            "22nd,22nd"
+    })
+    void alreadyOrdinals(String expected, String input) {
+        assertEquals(expected, new Ordinal().format(input));
     }
 
-    @Test
-    void fullSentence() {
-        assertEquals("1st edn.", new Ordinal().format("1 edn."));
-        assertEquals("1st edition", new Ordinal().format("1st edition"));
-        assertEquals("The 2nd conference on 3rd.14th", new Ordinal().format("The 2 conference on 3.14"));
+    @ParameterizedTest
+    @CsvSource({
+            "1st edn.,1 edn.",
+            "1st edition,1st edition",
+            "The 2nd conference on 3rd.14th,The 2 conference on 3.14"
+    })
+    void fullSentence(String expected, String input) {
+        assertEquals(expected, new Ordinal().format(input));
     }
 
-    @Test
-    void letters() {
-        assertEquals("abCD eFg", new Ordinal().format("abCD eFg"));
+    @ParameterizedTest
+    @CsvSource({
+            "abCD eFg,abCD eFg"
+    })
+    void letters(String expected, String input) {
+        assertEquals(expected, new Ordinal().format(input));
     }
 }
+
+
