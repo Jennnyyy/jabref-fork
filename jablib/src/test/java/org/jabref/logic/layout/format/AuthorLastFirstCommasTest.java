@@ -13,12 +13,12 @@ class AuthorLastFirstCommasTest {
      * Test method for {@link org.jabref.logic.layout.format.AuthorLastFirstCommas#format(java.lang.String)}.
      */
     @ParameterizedTest
-    @CsvSource({
-            ",",
-            "Someone, Van Something,Van Something Someone",
-            "von Neumann, John and Black Brown, Peter,John von Neumann and Black Brown, Peter",
-            "von Neumann, John, Smith, John and Black Brown, Peter,von Neumann, John and Smith, John and Black Brown, Peter",
-            "von Neumann, John, Smith, John and Black Brown, Peter, John von Neumann and John Smith and Black Brown, Peter"
+    @CsvSource(delimiter = ';', value = {
+            "'';''",
+            "Someone, Van Something;Van Something Someone",
+            "von Neumann, John and Black Brown, Peter;John von Neumann and Black Brown, Peter",
+            "von Neumann, John, Smith, John and Black Brown, Peter;von Neumann, John and Smith, John and Black Brown, Peter",
+            "von Neumann, John, Smith, John and Black Brown, Peter; John von Neumann and John Smith and Black Brown, Peter"
     })
     void format(String expected, String input) {
         LayoutFormatter a = new AuthorLastFirstCommas();
