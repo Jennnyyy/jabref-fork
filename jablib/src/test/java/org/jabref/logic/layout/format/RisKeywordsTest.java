@@ -14,12 +14,13 @@ public class RisKeywordsTest {
 
     static Stream<Arguments> getKeywords() {
         return Stream.of(
-                Arguments.of("", ""),
-                Arguments.of("", null),
-                Arguments.of("KW  - abcd", "abcd"),
-                Arguments.of("KW  - abcd" + OS.NEWLINE + "KW  - efg", "abcd, efg"),
+                Arguments.of("", ""), // empty
+                Arguments.of("", null), // testNull
+                // one or more keywords:
+                Arguments.of("KW  - abcd", "abcd"), // singleKeyword
+                Arguments.of("KW  - abcd" + OS.NEWLINE + "KW  - efg", "abcd, efg"), // twoKeywords
                 Arguments.of("KW  - abcd" + OS.NEWLINE + "KW  - efg" + OS.NEWLINE
-                        + "KW  - hij" + OS.NEWLINE + "KW  - klm", "abcd, efg, hij, klm")
+                        + "KW  - hij" + OS.NEWLINE + "KW  - klm", "abcd, efg, hij, klm") // multipleKeywords
         );
     }
 

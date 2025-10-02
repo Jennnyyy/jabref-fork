@@ -21,32 +21,21 @@ class OrdinalTest {
 
     @ParameterizedTest
     @CsvSource({
+            // Single Digit
             "1st,1",
             "2nd,2",
             "3rd,3",
-            "4th,4"
-    })
-    void singleDigit(String expected, String input) {
-        assertEquals(expected, new Ordinal().format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
+            "4th,4",
+            // Multi Digit
             "11th,11",
             "111th,111",
-            "21st,21"
-    })
-    void multiDigits(String expected, String input) {
-        assertEquals(expected, new Ordinal().format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
+            "21st,21",
+            // Already Ordinals
             "1st,1st",
             "111th,111th",
-            "22nd,22nd"
+            "22nd,22nd",
     })
-    void alreadyOrdinals(String expected, String input) {
+    void formatsNumbersAsOrdinals(String expected, String input) {
         assertEquals(expected, new Ordinal().format(input));
     }
 

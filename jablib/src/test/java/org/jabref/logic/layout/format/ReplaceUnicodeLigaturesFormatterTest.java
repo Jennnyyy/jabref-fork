@@ -17,35 +17,18 @@ class ReplaceUnicodeLigaturesFormatterTest {
 
     @ParameterizedTest
     @CsvSource({
-            "lorem ipsum,lorem ipsum"
-    })
-    void plainFormat(String expected, String input) {
-        assertEquals(expected, formatter.format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
+            // No Ligatures
+            "lorem ipsum,lorem ipsum",
+            // Single Ligatures
             "AA,\uA732",
             "fi,ﬁ",
-            "et,\uD83D\uDE70"
-    })
-    void singleLigatures(String expected, String input) {
-        assertEquals(expected, formatter.format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "aefffflstue,æﬀﬄﬆᵫ"
-    })
-    void ligatureSequence(String expected, String input) {
-        assertEquals(expected, formatter.format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
+            "et,\uD83D\uDE70",
+            // Ligature Sequences
+            "aefffflstue,æﬀﬄﬆᵫ",
+            // Sample Input
             "AEneas,Æneas"
     })
-    void sampleInput(String expected, String input) {
+    void format_replaces_ligatures(String expected, String input) {
         assertEquals(expected, formatter.format(input));
     }
 }
