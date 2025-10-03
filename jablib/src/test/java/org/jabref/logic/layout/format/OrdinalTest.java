@@ -34,26 +34,14 @@ class OrdinalTest {
             "1st,1st",
             "111th,111th",
             "22nd,22nd",
-    })
-    void formatsNumbersAsOrdinals(String expected, String input) {
-        assertEquals(expected, new Ordinal().format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
+            // Full Sentences
             "1st edn.,1 edn.",
             "1st edition,1st edition",
-            "The 2nd conference on 3rd.14th,The 2 conference on 3.14"
-    })
-    void fullSentence(String expected, String input) {
-        assertEquals(expected, new Ordinal().format(input));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
+            "The 2nd conference on 3rd.14th,The 2 conference on 3.14",
+            // Letters
             "abCD eFg,abCD eFg"
     })
-    void letters(String expected, String input) {
+    void formatsAllOrdinalCases(String expected, String input) {
         assertEquals(expected, new Ordinal().format(input));
     }
 }
