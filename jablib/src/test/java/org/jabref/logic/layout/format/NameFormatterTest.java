@@ -18,17 +18,22 @@ class NameFormatterTest {
             "Doe Joe and Jane, M. and Kamp, J.~A.; Joe Doe and Mary Jane and John Arthur van Kamp; 1@*@{ll}, {ff}@@*@1@{ll} {ff}@2..-1@ and {ll}, {f}."
     })
     void formatStringStringBibtexEntry(String expected, String input, String formatString) {
-        NameFormatter l = new NameFormatter();
-        assertEquals(expected, l.format(input, formatString));
+        NameFormatter nf = new NameFormatter();
+        assertEquals(expected, nf.format(input, formatString));
     }
 
     @ParameterizedTest
     @CsvSource(delimiter = ';', value = {
+            // Empty case
             "'';''",
+            // Single Names
             "Vandekamp Mary~Ann; Mary Ann Vandekamp",
+            // Two names
             "von Neumann John and Black~Brown, Peter; John von Neumann and Black Brown, Peter",
+            // Three names
             "von Neumann John, Smith, John and Black~Brown, Peter; von Neumann, John and Smith, John and Black Brown, Peter",
             "von Neumann John, Smith, John and Black~Brown, Peter; John von Neumann and John Smith and Black Brown, Peter",
+            // Four names
             "von Neumann John, Smith, John, Vandekamp, Mary~Ann and Black~Brown, Peter; von Neumann, John and Smith, John and Vandekamp, Mary Ann and Black Brown, Peter"
     })
     void format(String expected, String input) {
