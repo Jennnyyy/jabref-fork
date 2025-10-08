@@ -1,7 +1,8 @@
 package org.jabref.logic.layout.format;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,25 +15,20 @@ class ReplaceUnicodeLigaturesFormatterTest {
         formatter = new ReplaceUnicodeLigaturesFormatter();
     }
 
-    @Test
-    void plainFormat() {
-        assertEquals("lorem ipsum", formatter.format("lorem ipsum"));
-    }
-
-    @Test
-    void singleLigatures() {
-        assertEquals("AA", formatter.format("\uA732"));
-        assertEquals("fi", formatter.format("ﬁ"));
-        assertEquals("et", formatter.format("\uD83D\uDE70"));
-    }
-
-    @Test
-    void ligatureSequence() {
-        assertEquals("aefffflstue", formatter.format("æﬀﬄﬆᵫ"));
-    }
-
-    @Test
-    void sampleInput() {
-        assertEquals("AEneas", formatter.format("Æneas"));
+    @ParameterizedTest
+    @CsvSource({
+            // No Ligatures
+            "lorem ipsum,lorem ipsum",
+            // Single Ligatures
+            "AA,\uA732",
+            "fi,ﬁ",
+            "et,\uD83D\uDE70",
+            // Ligature Sequences
+            "aefffflstue,æﬀﬄﬆᵫ",
+            // Sample Input
+            "AEneas,Æneas"
+    })
+    void format_replaces_ligatures(String expected, String input) {
+        assertEquals(expected, formatter.format(input));
     }
 }
