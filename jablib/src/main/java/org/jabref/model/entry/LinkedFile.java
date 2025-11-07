@@ -49,63 +49,111 @@ public class LinkedFile implements Serializable {
     private transient StringProperty fileType = new SimpleStringProperty();
     private transient StringProperty sourceURL = new SimpleStringProperty();
 
-    public LinkedFile(String description, Path link, String fileType) {
+    private LinkedFile(String description, Path link, String fileType) {
         this(description, link.toString(), fileType);
     }
 
-    public LinkedFile(String description, Path link, String fileType, String sourceUrl) {
+    private LinkedFile(String description, Path link, String fileType, String sourceUrl) {
         this(description, link.toString(), fileType, sourceUrl);
     }
 
-    public LinkedFile(String description, String link, FileType fileType) {
+    private LinkedFile(String description, String link, FileType fileType) {
         this(description, link, fileType.getName());
     }
 
     /**
      * Constructor can also be used for non-valid paths. We need to parse them, because the GUI needs to render it.
      */
-    public LinkedFile(String description, String link, String fileType, String sourceUrl) {
+    private LinkedFile(String description, String link, String fileType, String sourceUrl) {
         this.description.setValue(description);
         setLink(link);
         this.fileType.setValue(fileType);
         this.sourceURL.setValue(sourceUrl);
     }
 
-    public LinkedFile(String description, String link, String fileType) {
+    private LinkedFile(String description, String link, String fileType) {
         this(description, link, fileType, "");
     }
 
-    public LinkedFile(URL link, String fileType) {
+    private LinkedFile(URL link, String fileType) {
         this("", link.toString(), fileType);
     }
 
-    public LinkedFile(String description, URL link, String fileType) {
+    private LinkedFile(String description, URL link, String fileType) {
         this(description, link.toString(), fileType);
     }
 
-    public LinkedFile(String description, URL link, String fileType, String sourceUrl) {
+    private LinkedFile(String description, URL link, String fileType, String sourceUrl) {
         this(description, link.toString(), fileType, sourceUrl);
     }
 
     /**
      * Constructs a new LinkedFile with an empty file type and an empty description
      */
-    public LinkedFile(Path link) {
+    private LinkedFile(Path link) {
         this("", link, "");
     }
 
+    /**
+     * Returns the observable property for the description, used for UI binding.
+     */
     public StringProperty descriptionProperty() {
         return description;
     }
 
+    /**
+     * Creates a LinkedFile for a local path with empty description and file type.
+     *
+     * @param link the path to the file
+     * @return a new LinkedFile instance
+     */
+    public static LinkedFile fromPath(Path link) {
+        return new LinkedFile("", link, "");
+    }
+
+    /**
+     * Creates a LinkedFile for a URL with the given file type and empty description.
+     *
+     * @param link the URL to the file
+     * @param fileType the type of the file (e.g., "pdf")
+     * @return a new LinkedFile instance
+     */
+    public static LinkedFile fromUrl(URL link, String fileType) {
+        return new LinkedFile("", link.toString(), fileType);
+    }
+
+    /**
+     * Creates a LinkedFile with the given description, link, and file type.
+     *
+     * @param description description of the file
+     * @param link the path or URL as a string
+     * @param fileType the type of the file (e.g., "pdf")
+     * @return a new LinkedFile instance
+     */
+    public static LinkedFile create(String description, String link, String fileType) {
+        return new LinkedFile(description, link, fileType);
+    }
+
+    /**
+     * Returns the link property of this linked file.
+     * Can be used to display or edit the file path in the UI.
+     */
     public StringProperty linkProperty() {
         return link;
     }
 
+    /**
+     * Returns the file type property of this linked file.
+     * Useful for showing the file type (e.g., PDF) in the UI.
+     */
     public StringProperty fileTypeProperty() {
         return fileType;
     }
 
+    /**
+     * Returns the source URL property of this linked file.
+     * Can be used to show or edit the online source of the file in the UI.
+     */
     public StringProperty sourceUrlProperty() {
         return sourceURL;
     }
