@@ -1,6 +1,8 @@
 package org.jabref.logic.layout.format;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -17,37 +19,31 @@ class OrdinalTest {
         assertNull(new Ordinal().format(null));
     }
 
-    @Test
-    void singleDigit() {
-        assertEquals("1st", new Ordinal().format("1"));
-        assertEquals("2nd", new Ordinal().format("2"));
-        assertEquals("3rd", new Ordinal().format("3"));
-        assertEquals("4th", new Ordinal().format("4"));
-    }
-
-    @Test
-    void multiDigits() {
-        assertEquals("11th", new Ordinal().format("11"));
-        assertEquals("111th", new Ordinal().format("111"));
-        assertEquals("21st", new Ordinal().format("21"));
-    }
-
-    @Test
-    void alreadyOrdinals() {
-        assertEquals("1st", new Ordinal().format("1st"));
-        assertEquals("111th", new Ordinal().format("111th"));
-        assertEquals("22nd", new Ordinal().format("22nd"));
-    }
-
-    @Test
-    void fullSentence() {
-        assertEquals("1st edn.", new Ordinal().format("1 edn."));
-        assertEquals("1st edition", new Ordinal().format("1st edition"));
-        assertEquals("The 2nd conference on 3rd.14th", new Ordinal().format("The 2 conference on 3.14"));
-    }
-
-    @Test
-    void letters() {
-        assertEquals("abCD eFg", new Ordinal().format("abCD eFg"));
+    @ParameterizedTest
+    @CsvSource({
+            // Single Digit
+            "1st,1",
+            "2nd,2",
+            "3rd,3",
+            "4th,4",
+            // Multi Digit
+            "11th,11",
+            "111th,111",
+            "21st,21",
+            // Already Ordinals
+            "1st,1st",
+            "111th,111th",
+            "22nd,22nd",
+            // Full Sentences
+            "1st edn.,1 edn.",
+            "1st edition,1st edition",
+            "The 2nd conference on 3rd.14th,The 2 conference on 3.14",
+            // Letters
+            "abCD eFg,abCD eFg"
+    })
+    void formatsAllOrdinalCases(String expected, String input) {
+        assertEquals(expected, new Ordinal().format(input));
     }
 }
+
+
